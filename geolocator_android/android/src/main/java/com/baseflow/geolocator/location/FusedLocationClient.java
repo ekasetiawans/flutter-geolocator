@@ -88,16 +88,23 @@ class FusedLocationClient implements LocationClient {
       return buildLocationRequestDeprecated(options);
     }
 
-    LocationRequest.Builder builder = new LocationRequest.Builder(0);
+    LocationRequest result = LocationRequest.create();
+      result.setPriority(toPriority(options.getAccuracy()));
+      result.setInterval(options.getTimeInterval());
+      result.setFastestInterval(options.getTimeInterval());
+      result.setSmallestDisplacement(options.getDistanceFilter());
+      return result;
 
-    if (options != null) {
-      builder.setPriority(toPriority(options.getAccuracy()));
-      builder.setIntervalMillis(options.getTimeInterval());
-      builder.setMinUpdateIntervalMillis(options.getTimeInterval());
-      builder.setMinUpdateDistanceMeters(options.getDistanceFilter());
-    }
-
-    return builder.build();
+//    LocationRequest.Builder builder = new LocationRequest.Builder(0);
+//
+//    if (options != null) {
+//      builder.setPriority(toPriority(options.getAccuracy()));
+//      builder.setIntervalMillis(options.getTimeInterval());
+//      builder.setMinUpdateIntervalMillis(options.getTimeInterval());
+//      builder.setMinUpdateDistanceMeters(options.getDistanceFilter());
+//    }
+//
+//    return builder.build();
   }
 
   @SuppressWarnings("deprecation")
